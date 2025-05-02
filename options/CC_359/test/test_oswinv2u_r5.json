@@ -1,0 +1,136 @@
+{
+  "task": "mrrec_CCao12ch_P2D20"   
+  , "tag": "swin_CCao_DC_db" 
+  , "model": "swinv2im_ks4_cc"  
+  , "mask": "P_2D20_C18_218_170"  
+  , "gpu_ids": [0]
+  , "dist": false  
+  , "n_channels": 24    
+  , "model_path": "trained_models/CC_359/R5/OSwinV2u_C13/1080000_G1.pth"
+  , "model_name": "OSwinV2u_C13_R5"
+  , "test_step" : 1080000
+  , "path": {
+    "root": "mri_recon"
+    , "pretrained_netG": "trained_models/CC_359/R5/OSwinV2u_C13/1080000_G"  
+    , "pretrained_netE": null      
+  }
+
+  , "datasets": {
+    "train": {
+      "name": "train_dataset"
+      , "dataset_type": "ccoks" 
+      , "dataroot_H": "../Data/CC_359/train"    
+      , "mask": "P_2D20_C18_218_170"   
+      , "kx_size": 218
+      , "ky_size": 170
+      , "center": 7
+      , "acc" : 0.2
+      , "augment" : false   
+      , "use_patch" : false
+      , "num_patches" : "all"
+      , "normalize" : false
+      , "H_size": 4   
+      , "sigma": 15
+      , "is_noise": false    
+      , "noise_level": 0.0   
+      , "noise_var": 0.2
+      , "is_mini_dataset": false   
+      , "mini_dataset_prec": 1   
+      , "dataloader_shuffle": true
+      , "dataloader_num_workers": 4
+      , "dataloader_batch_size": 1
+    }
+    , "test": {
+      "name": "test_dataset"
+      , "dataset_type": "ccoks"
+      , "dataroot_H": "../Data/CC_359/test"   
+      , "mask": "P_2D20_C18_218_170"  
+      , "kx_size": 218
+      , "ky_size": 170
+      , "center": 7
+      , "acc" : 0.2
+      , "augment" : false  
+      , "use_patch" : false
+      , "num_patches" : "all"
+      , "normalize" : false
+      , "H_size": 4   
+      , "is_mini_dataset": false  
+      , "mini_dataset_prec": 1   
+      , "sigma": 15
+      , "is_noise": false   
+      , "noise_level": 0.0   
+      , "noise_var": 0.1
+    }
+  }
+
+  , "netG": {
+    "net_type": "swinir_v5"
+    , "upscale": 1 
+    , "in_chans": 24 
+    , "img_size": 256
+    , "window_size": 8
+    , "overlap_ratio": 0.5  
+    , "img_range": 1.0 
+    , "exp_conv": false
+    , "exp_factor": 1 
+    , "depths": [2, 2, 2]  
+    , "embed_dim": 96  
+    , "num_heads": [4, 4, 4] 
+    , "mlp_ratio": 2 
+    , "upsampler": null
+    , "resi_connection": "1conv"  
+    , "init_type": "default"
+  }
+
+  , "train": {
+    "use_DC" : true
+  , "residual_DC" : false
+  , "weight_sharing" : false
+  , "swin_checkpoint" : false
+  , "otb_checkpoint" : false
+  , "net_num" : 13
+  , "overlap": [true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+  , "CAB_scale": [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+  , "DC_step" : 10000
+  , "cascade_loss_type": "simple"
+  , "G_lossfn_kspace": false
+  , "G_lossfn_type": "l2"   
+  , "G_lossfn_weight": 1  
+  , "G_charbonnier_eps": 1e-9     
+  , "alpha": 1   
+  , "beta": 0   
+  , "gamma": 0    
+  , "E_decay": 0   
+
+  , "G_optimizer_type": "adam"   
+  , "G_optimizer_lr": 2e-4   
+  , "G_optimizer_wd": 0    
+  , "G_optimizer_clipgrad": null
+  , "G_optimizer_reuse": true
+
+  , "G_scheduler_type": "CosineAnnealingWarmupRestarts"
+  , "G_scheduler_milestones": [2000, 1000000]
+  , "G_scheduler_gamma": 0.8
+
+  , "G_regularizer_orthstep": null
+  , "G_regularizer_clipstep": null
+
+  , "G_param_strict": true
+  , "E_param_strict": true
+
+  , "checkpoint_test": 1000    
+  , "checkpoint_save": 10000    
+  , "checkpoint_print": 200   
+  , "is_early_stopping": false
+  , "early_stopping_num": 20
+}
+
+, "test" :{
+    "test_count" : "all"
+  , "save_count" : "all"
+  , "use_DC" : true
+  , "save_raw_output" : false
+  , "save_full_output" : false
+
+}
+}

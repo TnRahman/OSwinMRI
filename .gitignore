@@ -1,0 +1,4 @@
+**/__pycache__/
+mri_recon
+trained_models/*
+!trained_models/checkpoints.md
